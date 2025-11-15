@@ -30,7 +30,7 @@ const runAutoCommit = () => {
   console.log('Files changed:', filesChanged);
   console.log('Commit message:', aiGeneratedMessage);
   runShellCommand('git add .');
-  runShellCommand(`git commit -m "${aiGeneratedMessage} - AI generated message"`);
+  runShellCommand(`git commit -m "${aiGeneratedMessage}"`);
 };
 
 runAutoCommit();
