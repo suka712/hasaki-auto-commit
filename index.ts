@@ -29,7 +29,7 @@ const generateCommitMessage = async (gitDiffOutput: string) => {
       model: 'gemini-2.5-flash',
       contents: `Generate a 10 word or less message for the following git commit: ${gitDiffOutput}`,
     });
-    return response.text?.replace(/"/g, '\\"');
+    return response.text?.trim().replace(/"/g, '\\"');
   } catch (error) {
     console.log('Error generating commit message:', error);
     return 'Error generating commit message';
@@ -56,7 +56,7 @@ const main = async () => {
 
   const commitMessage = await generateCommitMessage(gitDiffOutput);
 
-  if (!commitMessage) {
+  if (!commitMessage || commitMessage?.length === 0) {
     console.log('Empty commit message. No commit made.');
     return;
   }
