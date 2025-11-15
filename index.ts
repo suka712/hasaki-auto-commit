@@ -7,14 +7,17 @@ const runShellCommand = (command: string) => {
   return execSync(command, { stdio: 'inherit' });
 };
 
-const getFilesChanged = () => {
-  return execSync('git diff --name-only').toString().trim().split('\n').join(', ');
+const getFilesChanged = (): string[] => {
+  return execSync('git diff --name-only').toString().trim().split('\n');
+};
+
+const getGitDiffOutput = () => {
+  return execSync('git --no-pager diff').toString();
 };
 
 const ai = new GoogleGenAI({});
 
-const generateCommitMessage = async () => {
-  const gitDiffOutput = execSync('git --no-pager diff').toString();
+const generateCommitMessage = async (gitDiffOutput: string) => {
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -28,19 +31,27 @@ const generateCommitMessage = async () => {
 };
 
 const runAutoCommit = async (commitMessage: string) => {
-  console.log('Files changed:', filesChanged);
-  console.log('Commit message:', commitMessage);
   runShellCommand('git add .');
   runShellCommand(`git commit -m "${commitMessage}"`);
 };
 
-const filesChanged = getFilesChanged();
-
-if (filesChanged.length === 0) {
-  console.log('No file changes. No commit made.');
-} else {
-  const generatedMessage = await generateCommitMessage();
-  if (generatedMessage) {
-    runAutoCommit(generatedMessage);
+const main = async () => {
+  const filesChanged = getFilesChanged();
+  
+  if (filesChanged.length === 0) {
+    console.log('No file changes. No commit made.');
+    return;
   }
-}
+
+  const gitDiffOutput = getGitDiffOutput()
+  const commitMessage = await generateCommitMessage(gitDiffOutput);
+
+  if (!commitMessage) {
+    console.log('Empty commit message. No commit made.');
+    return;
+  }
+
+  runAutoCommit(commitMessage);
+};
+
+main();
