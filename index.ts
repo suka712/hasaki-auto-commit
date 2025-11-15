@@ -39,7 +39,7 @@ const main = async () => {
   const filesChanged = getFilesChanged();
 
   if (filesChanged.length === 0) {
-    console.log('No file changes. No commit made.');
+    console.log('No file change. No commit made.');
     return;
   }
 
