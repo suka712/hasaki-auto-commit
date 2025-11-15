@@ -12,7 +12,7 @@ const getFilesChanged = (): string[] => {
 };
 
 const getGitDiffOutput = () => {
-  return execSync('git --no-pager diff').toString();
+  return execSync('git --no-pager diff --staged').toString();
 };
 
 const ai = new GoogleGenAI({});
@@ -44,6 +44,11 @@ const main = async () => {
   }
 
   const gitDiffOutput = getGitDiffOutput();
+
+  if (gitDiffOutput.length === 0) {
+    console.log('Diff output is empty. No commit made.'); // TODO: needs testing
+  }
+
   const commitMessage = await generateCommitMessage(gitDiffOutput);
 
   if (!commitMessage) {
