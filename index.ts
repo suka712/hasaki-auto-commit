@@ -3,11 +3,18 @@ import { execSync } from 'node:child_process';
 import { GoogleGenAI } from '@google/genai';
 import 'dotenv/config';
 
-const filesChanged = execSync('git diff --name-only').toString().trim().split('\n').join(', ');
-const gitDiffOutput = execSync('git --no-pager diff').toString();
 const ai = new GoogleGenAI({});
 
+const runShellCommand = (command: string) => {
+  return execSync(command, { stdio: 'inherit' });
+};
+
+const getFilesChanged = () => {
+  return execSync('git diff --name-only').toString().trim().split('\n').join(', ');
+};
+
 const generateCommitMessage = async () => {
+  const gitDiffOutput = execSync('git --no-pager diff').toString();
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -20,11 +27,8 @@ const generateCommitMessage = async () => {
   }
 };
 
+const filesChanged = getFilesChanged();
 const aiGeneratedMessage = await generateCommitMessage();
-
-const runShellCommand = (command: string) => {
-  return execSync(command, { stdio: 'inherit' });
-};
 
 const runAutoCommit = () => {
   console.log('Files changed:', filesChanged);
