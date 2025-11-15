@@ -14,7 +14,7 @@ const getFilesChanged = (): string[] => {
 const getGitDiffOutput = () => {
   let gitDiffOutput = execSync('git --no-pager diff').toString();
 
-  if (!(gitDiffOutput.length === 0)) {
+  if (gitDiffOutput.length > 0) {
     return gitDiffOutput;
   }
 
