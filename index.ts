@@ -27,12 +27,12 @@ const generateCommitMessage = async () => {
   }
 };
 
-const aiGeneratedMessage = await generateCommitMessage();
 const filesChanged = getFilesChanged();
 
-const runAutoCommit = () => {
-  console.log('Files changed:', filesChanged);
+const runAutoCommit = async () => {
+  const aiGeneratedMessage = await generateCommitMessage();
 
+  console.log('Files changed:', filesChanged);
   console.log('Commit message:', aiGeneratedMessage);
   runShellCommand('git add .');
   runShellCommand(`git commit -m "${aiGeneratedMessage}"`);
@@ -41,5 +41,5 @@ const runAutoCommit = () => {
 if (filesChanged.length === 0) {
   console.log('No file changes. No commit made.');
 } else {
-  runAutoCommit();
+  await runAutoCommit();
 }
