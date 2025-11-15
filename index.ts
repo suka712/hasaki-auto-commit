@@ -11,16 +11,6 @@ const getFilesChanged = (): string[] => {
   return execSync('git diff --name-only').toString().trim().split('\n');
 };
 
-// Wonky logic - can be removed.
-const checkUnstagedFiles = () => {
-  const unstagedFiles = execSync('git ls-files --others --exclude-standard').toString().trim().split('\n');
-  if (unstagedFiles.length > 0) {
-    console.log('Has unstaged files:', unstagedFiles.join(', '));
-    runShellCommand('git add .');
-    console.log('Untracked files staged for commit.');
-  } 
-}
-
 const getGitDiffOutput = () => {
   let gitDiffOutput = execSync('git --no-pager diff').toString();
 
@@ -47,12 +37,11 @@ const generateCommitMessage = async (gitDiffOutput: string) => {
 };
 
 const runAutoCommit = async (commitMessage: string) => {
-  runShellCommand('git add .');
   runShellCommand(`git commit -m "${commitMessage}"`);
 };
 
 const main = async () => {
-  checkUnstagedFiles();
+  runShellCommand('git add .');
   
   const filesChanged = getFilesChanged();
 
