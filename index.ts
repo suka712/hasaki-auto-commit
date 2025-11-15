@@ -57,7 +57,7 @@ const main = async () => {
   const commitMessage = await generateCommitMessage(gitDiffOutput);
 
   if (!commitMessage?.trim()) {
-    console.log('Empty commit message. No commit made.');
+    console.log('Empty commit message. No commit made.'); // TODO: test also. Never ran before
     return;
   }
 
