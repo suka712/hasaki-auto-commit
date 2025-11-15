@@ -12,9 +12,9 @@ const getFilesChanged = (): string[] => {
 };
 
 const checkUnstagedFiles = () => {
-  const unstagedFiles = execSync('git ls-files --others --exclude-standard').toString().trim().split('/n');
+  const unstagedFiles = execSync('git ls-files --others --exclude-standard').toString().trim().split('\n');
   if (unstagedFiles.length > 0) {
-    console.log('Has unstaged changes.');
+    console.log('Has unstaged files:', unstagedFiles.join(', '));
   } 
 }
 
