@@ -12,6 +12,12 @@ const getFilesChanged = (): string[] => {
 };
 
 const getGitDiffOutput = () => {
+  let gitDiffOutput = execSync('git --no-pager diff').toString();
+
+  if (!(gitDiffOutput.length === 0)) {
+    return gitDiffOutput;
+  }
+
   return execSync('git --no-pager diff --staged').toString();
 };
 
@@ -46,7 +52,8 @@ const main = async () => {
   const gitDiffOutput = getGitDiffOutput();
 
   if (gitDiffOutput.length === 0) {
-    console.log('Diff output is empty. No commit made.'); // TODO: needs testing
+    console.log('Diff output is empty. No commit made.'); // TODO: needs testing    
+    return;
   }
 
   const commitMessage = await generateCommitMessage(gitDiffOutput);
