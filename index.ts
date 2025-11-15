@@ -37,13 +37,13 @@ const runAutoCommit = async (commitMessage: string) => {
 
 const main = async () => {
   const filesChanged = getFilesChanged();
-  
+
   if (filesChanged.length === 0) {
     console.log('No file changes. No commit made.');
     return;
   }
 
-  const gitDiffOutput = getGitDiffOutput()
+  const gitDiffOutput = getGitDiffOutput();
   const commitMessage = await generateCommitMessage(gitDiffOutput);
 
   if (!commitMessage) {
