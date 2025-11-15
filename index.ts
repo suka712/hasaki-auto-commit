@@ -37,6 +37,7 @@ const generateCommitMessage = async (gitDiffOutput: string) => {
 };
 
 const main = async () => {
+  // Add every changes including unstaged files
   runShellCommand('git add .');
   
   const filesChanged = getFilesChanged();
@@ -60,6 +61,7 @@ const main = async () => {
     return;
   }
 
+  // Performs the commit
   runShellCommand(`git commit -m "${commitMessage}"`);
 };
 
