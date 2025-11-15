@@ -54,4 +54,5 @@ const main = async () => {
   runAutoCommit(commitMessage);
 };
 
+// Runs the app
 main();
