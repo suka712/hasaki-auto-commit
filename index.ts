@@ -5,4 +5,10 @@ const runShellCommand = (command: string) => {
   return execSync(command, { stdio: 'inherit' });
 };
 
-runShellCommand('ls');
+const generateMessage = () => {
+
+}
+
+const files = execSync('git diff --name-only').toString().trim()
+
+console.log(files)
