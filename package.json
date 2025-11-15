@@ -9,10 +9,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "hx": "./index.ts"
+  },
   "devDependencies": {
     "@types/node": "^24.10.1"
   },
-  "bin": {
-    "hx": "./index.ts"
+  "dependencies": {
+    "@google/genai": "^1.29.1",
+    "dotenv": "^17.2.3"
   }
 }
