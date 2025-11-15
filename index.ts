@@ -36,10 +36,6 @@ const generateCommitMessage = async (gitDiffOutput: string) => {
   }
 };
 
-const runAutoCommit = async (commitMessage: string) => {
-  runShellCommand(`git commit -m "${commitMessage}"`);
-};
-
 const main = async () => {
   runShellCommand('git add .');
   
@@ -64,7 +60,7 @@ const main = async () => {
     return;
   }
 
-  runAutoCommit(commitMessage);
+  runShellCommand(`git commit -m "${commitMessage}"`);
 };
 
 // Runs the app
