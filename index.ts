@@ -7,16 +7,20 @@ const filesChanged = execSync('git diff --name-only').toString().trim().split('\
 const gitDiffOutput = execSync('git --no-pager diff').toString();
 const ai = new GoogleGenAI({});
 
-const generateMessage = async () => {
-  const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
-    contents: `Generate a 10 word or less message for the following git commit: ${gitDiffOutput}`,
-  });
-
-  return response.text;
+const generateCommitMessage = async () => {
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: `Generate a 10 word or less message for the following git commit: ${gitDiffOutput}`,
+    });
+    return response.text;
+  } catch (error) {
+    console.log('Error generating commit message:', error);
+    return 'Error generating commit message';
+  }
 };
 
-const aiGeneratedMessage = await generateMessage();
+const aiGeneratedMessage = await generateCommitMessage();
 
 const runShellCommand = (command: string) => {
   return execSync(command, { stdio: 'inherit' });
