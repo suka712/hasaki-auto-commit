@@ -11,10 +11,13 @@ const getFilesChanged = (): string[] => {
   return execSync('git diff --name-only').toString().trim().split('\n');
 };
 
+// Wonky logic - can be removed.
 const checkUnstagedFiles = () => {
   const unstagedFiles = execSync('git ls-files --others --exclude-standard').toString().trim().split('\n');
   if (unstagedFiles.length > 0) {
     console.log('Has unstaged files:', unstagedFiles.join(', '));
+    runShellCommand('git add .');
+    console.log('Untracked files staged for commit.');
   } 
 }
 
