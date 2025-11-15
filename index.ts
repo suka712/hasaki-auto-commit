@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { execSync } from 'node:child_process';
 import { GoogleGenAI } from '@google/genai';
-import 'dotenv/config'
+import 'dotenv/config';
 
 const numberOfFilesChanged = execSync('git diff --name-only').toString().trim().split('\n').length;
 const gitDiffOutput = execSync('git --no-pager diff').toString();
