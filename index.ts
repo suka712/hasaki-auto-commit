@@ -3,8 +3,6 @@ import { execSync } from 'node:child_process';
 import { GoogleGenAI } from '@google/genai';
 import 'dotenv/config';
 
-const ai = new GoogleGenAI({});
-
 const runShellCommand = (command: string) => {
   return execSync(command, { stdio: 'inherit' });
 };
@@ -12,6 +10,8 @@ const runShellCommand = (command: string) => {
 const getFilesChanged = () => {
   return execSync('git diff --name-only').toString().trim().split('\n').join(', ');
 };
+
+const ai = new GoogleGenAI({});
 
 const generateCommitMessage = async () => {
   const gitDiffOutput = execSync('git --no-pager diff').toString();
@@ -27,19 +27,20 @@ const generateCommitMessage = async () => {
   }
 };
 
-const filesChanged = getFilesChanged();
-
-const runAutoCommit = async () => {
-  const aiGeneratedMessage = await generateCommitMessage();
-
+const runAutoCommit = async (commitMessage: string) => {
   console.log('Files changed:', filesChanged);
-  console.log('Commit message:', aiGeneratedMessage);
+  console.log('Commit message:', commitMessage);
   runShellCommand('git add .');
-  runShellCommand(`git commit -m "${aiGeneratedMessage}"`);
+  runShellCommand(`git commit -m "${commitMessage}"`);
 };
+
+const filesChanged = getFilesChanged();
 
 if (filesChanged.length === 0) {
   console.log('No file changes. No commit made.');
 } else {
-  await runAutoCommit();
+  const generatedMessage = await generateCommitMessage();
+  if (generatedMessage) {
+    runAutoCommit(generatedMessage);
+  }
 }
