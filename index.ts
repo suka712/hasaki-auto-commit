@@ -5,7 +5,7 @@ import { apiKey } from './secret.ts';
 
 const drawLogBox = (commitMessage: string, filesChanged: string[]) => {
   const maxBoxWidth = 60;
-  const messageLength = maxBoxWidth - 15;
+  const messageLength = maxBoxWidth - 20;
   const contentSpace = maxBoxWidth - 4;
 
   const commitMessagePrint = `Message: ${
