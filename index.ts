@@ -37,7 +37,11 @@ const runShellCommand = (command: string) => {
 };
 
 const getFilesChanged = (): string[] => {
-  return execSync('git diff --cached --name-only').toString().trim().split('\n');
+  const output = execSync('git diff --cached --name-only').toString().trim();
+  if (output === '') {
+    return [];
+  }
+  return output.split('\n');
 };
 
 const getGitDiffOutput = () => {
