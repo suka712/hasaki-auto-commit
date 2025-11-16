@@ -32,7 +32,7 @@ const generateCommitMessage = async (gitDiffOutput: string) => {
     return response.text?.trim().replace(/"/g, '\\"');
   } catch (error) {
     console.log('Error generating commit message:', error);
-    return 'Error generating commit message';
+    return;
   }
 };
 
