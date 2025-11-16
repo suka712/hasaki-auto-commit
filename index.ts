@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import { execSync } from 'node:child_process';
 import { GoogleGenAI } from '@google/genai';
-import 'dotenv/config';
 import { apiKey } from './secret.ts';
 
 const drawLogBox = (commitMessage: string, filesChanged: string[]) => {
