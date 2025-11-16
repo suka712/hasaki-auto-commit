@@ -37,16 +37,10 @@ const runShellCommand = (command: string) => {
 };
 
 const getFilesChanged = (): string[] => {
-  return execSync('git diff --name-only').toString().trim().split('\n');
+  return execSync('git diff --cached --name-only').toString().trim().split('\n');
 };
 
 const getGitDiffOutput = () => {
-  let gitDiffOutput = execSync('git --no-pager diff').toString();
-
-  if (gitDiffOutput.length > 0) {
-    return gitDiffOutput;
-  }
-
   return execSync('git --no-pager diff --staged').toString();
 };
 
@@ -65,8 +59,6 @@ const generateCommitMessage = async (gitDiffOutput: string) => {
     return;
   }
 };
-
-console.log('Test change')
 
 const main = async () => {
   // Add every changes including unstaged files
