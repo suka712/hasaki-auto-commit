@@ -47,9 +47,9 @@ const getGitDiffOutput = () => {
   return execSync('git --no-pager diff --staged').toString();
 };
 
-const ai = new GoogleGenAI({ apiKey: apiKey });
 const generateCommitMessage = async (gitDiffOutput: string) => {
   try {
+    const ai = new GoogleGenAI({ apiKey: apiKey });
     console.log('Generating commit message...');
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
