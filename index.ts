@@ -65,5 +65,6 @@ const main = async () => {
   runShellCommand(`git commit -m "${commitMessage}"`);
 };
 
+
 // Runs the app
 main();
