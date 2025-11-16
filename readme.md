@@ -11,9 +11,9 @@ npm install
 
 npm link
 ```
-Make an `.env` similar to `env.example` and put your Gemini API key in:
-```bash
-GEMINI_API_KEY="ABcdEeFgHwRTdwd9tguOM5pW3uASBsnbyJv1_xn"
+Make a `secret.ts` similar to `secret.example.ts` and put your Gemini API key in:
+```ts
+export const apiKey = 'AIzaSyCnTgTRwdd5tjgMO3eW3sASBsrxcJv1_gs';
 ```
 
 The app should then be available via `hx`
