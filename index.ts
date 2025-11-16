@@ -74,13 +74,13 @@ const main = async () => {
 
   const gitDiffOutput = getGitDiffOutput();
   if (gitDiffOutput.length === 0) {
-    console.log('Diff output is empty. No commit made.'); // TODO: needs testing
+    console.log('Diff output is empty. No commit made.'); // TODO: need testing, never seen before
     return;
   }
 
   const commitMessage = await generateCommitMessage(gitDiffOutput);
   if (!commitMessage?.trim()) {
-    console.log('Empty commit message. No commit made.'); // TODO: test also. Never ran before
+    console.log('Empty commit message. No commit made.'); // In cases of failed message gen
     return;
   }
 
