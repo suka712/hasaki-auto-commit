@@ -2,6 +2,7 @@
 import { execSync } from 'node:child_process';
 import { GoogleGenAI } from '@google/genai';
 import 'dotenv/config';
+import { apiKey } from './secret.ts';
 
 const drawLogBox = (commitMessage: string, filesChanged: string[]) => {
   const maxBoxWidth = 70;
@@ -47,7 +48,7 @@ const getGitDiffOutput = () => {
   return execSync('git --no-pager diff --staged').toString();
 };
 
-const ai = new GoogleGenAI({});
+const ai = new GoogleGenAI({ apiKey: apiKey });
 const generateCommitMessage = async (gitDiffOutput: string) => {
   try {
     console.log('Generating commit message...');
