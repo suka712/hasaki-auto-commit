@@ -4,7 +4,7 @@ import { GoogleGenAI } from '@google/genai';
 import { apiKey } from './secret.ts';
 
 const drawLogBox = (commitMessage: string, filesChanged: string[]) => {
-  const maxBoxWidth = 70;
+  const maxBoxWidth = 60;
   const messageLength = maxBoxWidth - 20;
   const contentSpace = maxBoxWidth - 4;
 
@@ -13,7 +13,7 @@ const drawLogBox = (commitMessage: string, filesChanged: string[]) => {
       ? commitMessage
       : commitMessage.substring(0, messageLength) + '...'
   }`;
-  const fileChangedPrint = `Files changed: ${
+  const fileChangedPrint = `Changed: ${
     filesChanged.join(', ').length < messageLength
       ? filesChanged.join(', ')
       : filesChanged.join(', ').substring(0, messageLength) + '...'
