@@ -25,10 +25,10 @@ const drawLogBox = (commitMessage: string, filesChanged: string[]) => {
   };
 
   const horizontalLine = '─'.repeat(maxBoxWidth - 2);
-  console.log('┌' + horizontalLine + '┐');
+  console.log('╭' + horizontalLine + '╮');
   console.log(`│ ${padLine(commitMessagePrint)} │`);
   console.log(`│ ${padLine(fileChangedPrint)} │`);
-  console.log('└' + horizontalLine + '┘');
+  console.log('╰' + horizontalLine + '╯');
 };
 
 const runShellCommand = (command: string) => {
