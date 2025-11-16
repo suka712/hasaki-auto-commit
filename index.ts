@@ -66,6 +66,8 @@ const generateCommitMessage = async (gitDiffOutput: string) => {
   }
 };
 
+console.log('Test change')
+
 const main = async () => {
   // Add every changes including unstaged files
   runShellCommand('git add .');
