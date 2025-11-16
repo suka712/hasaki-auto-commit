@@ -31,6 +31,7 @@ const drawLogBox = (commitMessage: string, filesChanged: string[]) => {
   console.log('╰' + horizontalLine + '╯');
 };
 
+// ---------------------------Shell & Git helpers---------------------------
 const runShellCommand = (command: string) => {
   return execSync(command, { stdio: 'inherit' });
 };
@@ -47,11 +48,12 @@ const getGitDiffOutput = () => {
   return execSync('git --no-pager diff --staged').toString();
 };
 
+// ---------------------------Ai msg gen helpers---------------------------
 const generateCommitMessage = async (gitDiffOutput: string) => {
   try {
-    const ai = new GoogleGenAI({ apiKey: apiKey });
+    const genAi = new GoogleGenAI({ apiKey: apiKey });
     console.log('Generating commit message...');
-    const response = await ai.models.generateContent({
+    const response = await genAi.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: `Generate a 10 word or less message for the following git commit: ${gitDiffOutput}`,
     });
@@ -61,7 +63,7 @@ const generateCommitMessage = async (gitDiffOutput: string) => {
     return;
   }
 };
-
+// ---------------------------Main program---------------------------
 const main = async () => {
   // Add every changes including unstaged files
   runShellCommand('git add .');
