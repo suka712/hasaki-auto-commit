@@ -25,7 +25,6 @@ const drawLogBox = (commitMessage: string, filesChanged: string[]) => {
   };
 
   const horizontalLine = '─'.repeat(maxBoxWidth - 2);
-
   console.log('┌' + horizontalLine + '┐');
   console.log(`│ ${padLine(commitMessagePrint)} │`);
   console.log(`│ ${padLine(fileChangedPrint)} │`);
@@ -49,7 +48,6 @@ const getGitDiffOutput = () => {
 };
 
 const ai = new GoogleGenAI({});
-
 const generateCommitMessage = async (gitDiffOutput: string) => {
   try {
     console.log('Generating commit message...');
@@ -69,21 +67,18 @@ const main = async () => {
   runShellCommand('git add .');
 
   const filesChanged = getFilesChanged();
-
   if (filesChanged.length === 0) {
     console.log('No file change. No commit made.');
     return;
   }
 
   const gitDiffOutput = getGitDiffOutput();
-
   if (gitDiffOutput.length === 0) {
     console.log('Diff output is empty. No commit made.'); // TODO: needs testing
     return;
   }
 
   const commitMessage = await generateCommitMessage(gitDiffOutput);
-
   if (!commitMessage?.trim()) {
     console.log('Empty commit message. No commit made.'); // TODO: test also. Never ran before
     return;
@@ -91,7 +86,6 @@ const main = async () => {
 
   // Performs the commit
   runShellCommand(`git commit -m "${commitMessage}"`);
-
   drawLogBox(commitMessage, filesChanged);
 };
 
